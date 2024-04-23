@@ -12,9 +12,9 @@ module.exports = {
     //     changeOrigin: true,
     //   }
     // }
-    proxy: {
-      '/api': 'http://localhost:2626/'
-    }
+    // proxy: {
+    //   '/api': 'http://localhost:2626/'
+    // }
   },
   webpack: {
     configure: (webpackConfig) => {
