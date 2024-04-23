@@ -41,7 +41,7 @@ export default function Register() {
       <div className={styles.header}>
           <div className={styles.logoWrap}>
             <img className={styles.imgWrap} src="./logo-line.png" alt="" />
-            <span className={styles.titleName}>DiDiAPI平台</span>
+            <span className={styles.titleName}>无忧智能VIP平台</span>
           </div>
       </div>
       <div className={styles.registerFromWrap}>
