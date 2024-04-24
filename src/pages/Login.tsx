@@ -29,9 +29,6 @@ export default function Login() {
     // console.log('Failed:', errorInfo);
   };
 
-  const handleRegisterHandle = () => {
-    navigate('/register')
-  }
 
   useEffect(() => {
     removeUserId();
@@ -60,9 +57,9 @@ export default function Login() {
             size="large"
           >
             <Form.Item
-              label="邮箱"
-              name="mailBox"
-              rules={[{ required: true, message: '请输入您的邮箱地址' },{ type: 'email', message: "请输入正确的邮箱" }]}
+              label="用户名"
+              name="userName"
+              rules={[{ required: true, message: '请输入您的用户名' }]}
             >
               <Input />
             </Form.Item>
@@ -77,11 +74,6 @@ export default function Login() {
                 <Button type="primary" htmlType="submit" size="large" block>
                   登录
                 </Button>
-            </Form.Item>
-            <Form.Item style={{textAlign:'right'}}>
-              <Button type="link" onClick={handleRegisterHandle}>
-                注册账号
-              </Button>
             </Form.Item>
           </Form>
         </div>

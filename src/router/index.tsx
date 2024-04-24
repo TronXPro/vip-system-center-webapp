@@ -6,7 +6,6 @@ import TokenList from '../pages/TokenList'
 import Help from "../pages/Help";
 import Recharge from '../pages/Recharge'
 import Login from "../pages/Login";
-import Register from "../pages/Register";
 import ToolKit from "../pages/ToolKit";
 import RechargeRecord from "../pages/RechargeRecord";
 
@@ -41,9 +40,6 @@ const routerList = [
   },{
     path: '/login',
     element: <Login/> 
-  },{
-    path: '/register',
-    element: <Register/> 
   }
 ]
 const router = createBrowserRouter(routerList)
