@@ -52,8 +52,8 @@ const MainLayout:FC = (props) => {
     <Layout>
       <Header className={styles.header}>
         <div className={styles.logoWrap}>
-          <img src="./logo.png" alt="" />
-          <span className={styles.titleName}>DiDiVip</span>
+          {/* <img src="./logo.png" alt="" /> */}
+          <span className={styles.titleName}>无忧智能系统</span>
         </div>
         {!isMobile ? 
           <Dropdown

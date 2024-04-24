@@ -56,25 +56,8 @@ export default function SaleRecord() {
     key: '进行中'
   }]
   useEffect(() => {
-    setLoading(true)
-    getSaleRecord({
-      ownerAddress: username,
-      page: tableParams.pagination.current,
-      pageSize: tableParams.pagination.pageSize
-    }).then((data:any) => {
-      setLoading(false)
-      setTableData(data.results)
-      setTableParams({
-        ...tableParams,
-        pagination: {
-          ...tableParams.pagination,
-          total: data.count
-        }
-      })
-      data.results.forEach((item:any) => {
-        item.completedRentalAmount = item.resourceValue - item.resourceValueResidual
-      })
-    })
+    // setLoading(true)
+    
   }, [JSON.stringify(tableParams)])
   const tableColumns:any = [
     {
@@ -84,49 +67,13 @@ export default function SaleRecord() {
       width: 170
     },
     {
-      title: '交易哈希',
-      dataIndex: 'transactionHash',
-      key: 'transactionHash',
-      width: 90,
-      render:(text:any,rowData: any) => {
-        return <span className={styles.textBtnWrap} onClick={() => {
-          getFreezeHashList(rowData._id).then((data:any) => {
-            let hashList = data.results.map((item:any) => item.hash)
-            setfreezeHashList(hashList)
-            setIsModalOpen(true);
-          })
-        }} >冻结哈希</span>
-      }
+      title: '推荐人的用户名',
+      dataIndex: '_id',
+      key: '_id',
+      width: 170
     },
     {
-      title: '资源接收地址',
-      dataIndex: 'receiverAddress',
-      key: 'receiverAddress',
-      width: 200,
-    },
-    {
-      title: '租用量',
-      dataIndex: 'resourceValue',
-      key: 'resourceValue',
-      width: 100,
-    },
-    {
-      title: '已完成租用量',
-      dataIndex: 'completedRentalAmount',
-      key: 'completedRentalAmount',
-      width: 150,
-    },
-    {
-      title: '租用时长',
-      dataIndex: 'duration',
-      key: 'duration',
-      width: 100,
-      render: (text:any) => {
-        return translateRentTime(text);
-      }
-    },
-    {
-      title: '支付时间',
+      title: '时间',
       dataIndex: 'createdAt',
       key: 'createdAt',
       width: 200,
@@ -135,7 +82,7 @@ export default function SaleRecord() {
       }
     },
     {
-      title: '支付金额',
+      title: '积分数量',
       dataIndex: 'commission',
       key: 'commission',
       width: 100,

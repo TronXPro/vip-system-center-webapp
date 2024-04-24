@@ -45,22 +45,8 @@ export default function RechargeRecord() {
     }
   }]
   useEffect(() => {
-    setLoading(true)
-    getRechargeRecord({
-      username: username,
-      page: 1,
-      pageSize: 10
-    }).then((data:any) => {
-      setLoading(false)
-      setTableData(data.results)
-      setTableParams({
-        ...tableParams,
-        pagination: {
-          ...tableParams.pagination,
-          total: data.count
-        }
-      })
-    })
+    // setLoading(true)
+    
   }, [JSON.stringify(tableParams)])
   return (
     <>

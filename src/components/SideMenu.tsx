@@ -22,7 +22,7 @@ export default function SideMenu() {
       icon: <HomeOutlined />,
     },
     {
-      label: '租用记录',
+      label: '积分记录',
       key: '/sale-record',
       icon: <UnorderedListOutlined />,
     },
@@ -32,7 +32,7 @@ export default function SideMenu() {
       icon: <ProfileOutlined />,
     },
     {
-      label: '使用帮助',
+      label: '常见问题',
       key: '/help',
       icon: <FileWordOutlined />,
     }
