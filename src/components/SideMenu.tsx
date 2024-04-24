@@ -32,16 +32,6 @@ export default function SideMenu() {
       icon: <ProfileOutlined />,
     },
     {
-      label: 'API密钥',
-      key: '/token-list',
-      icon: <ApiOutlined />,
-    },
-    {
-      label: '工具箱',
-      key: '/toolkit',
-      icon: <ToolOutlined />,
-    },
-    {
       label: '使用帮助',
       key: '/help',
       icon: <FileWordOutlined />,

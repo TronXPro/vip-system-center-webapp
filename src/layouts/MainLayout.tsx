@@ -19,8 +19,8 @@ const MainLayout:FC = (props) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false)
   const isMobile = useMediaQuery("(max-width: 750px)");
-  const userName = getUserName();
-  const userId = getUserId();
+  const userName = ''//getUserName();
+  const userId = ''//getUserId();
   const handleLogOutClick = () => {
     setUserLoginOut()
   }
@@ -44,9 +44,10 @@ const MainLayout:FC = (props) => {
     setOpen(false)
   }
   useEffect(() => {
-    updateUserDetail();
+    // updateUserDetail();
   }, [])
-  useNavPage()
+  // 判断用户是否处于登录的状态
+  // useNavPage()
   return (
     <Layout>
       <Header className={styles.header}>

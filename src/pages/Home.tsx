@@ -19,7 +19,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [payConfig, setPayConfig] = useState<any>({})
   const [messageApi, contextHolder] = message.useMessage();
-  const userId = getUserId();
+  const userId = '' //getUserId();
   const nav = useNavigate()
   const handleBingClick = () => {
     setisBindWalletAddressModalOpen(true)
@@ -57,13 +57,6 @@ export default function Home() {
     })
   }
   const onFinishFailed =() => {
-  }
-  const handleRecharge = () => {
-    if(walletAddress) {
-      nav('/recharge')
-    } else {
-      messageApi.info('请先绑定Tron钱包地址')
-    }
   }
   const handleBindWalletAddressOk = () => {
     if(walletAddress) {
@@ -123,16 +116,16 @@ export default function Home() {
           {/* 账户余额 */}
           <Row gutter={[15,10]}>
             <Col span={24}>
-              <Card title="账户余额">
+              <Card title="用户信息">
                 <List itemLayout="horizontal">
                   <List.Item
                     style={{ overflow:'auto' }}
-                    actions={[<Button onClick={handleWithDrawClick}>提现</Button>,<Button type="primary" onClick={handleRecharge}>充值</Button>]}
+                    actions={[<Button onClick={handleWithDrawClick}>提现</Button>]}
                   >
                     <List.Item.Meta
-                      title='账户余额:'
+                      title='账户积分:'
                     />
-                    {userInfo.balance} TRX
+                    {userInfo.balance}
                   </List.Item>
                   <List.Item
                     style={{ overflow:'auto' }}
@@ -155,33 +148,6 @@ export default function Home() {
                     {userInfo.walletAddress}
                   </List.Item>
                 </List>
-              </Card>
-            </Col>
-            <Col span={24}>
-              <Card title="系统数据" style={{height: '100%'}}>
-                {
-                  payConfig?.priceConfig && (
-                    <div>
-                      <div style={{marginBottom: '15px'}}>
-                        <Statistic title="平台能量数量" value={payConfig?.availableEnergy} />
-                      </div>
-                      <div className={styles.systemDatasWrap}>
-                        <div style={{flex:'3 0 200px'}}>
-                          <Statistic title="1小时价格" value={payConfig?.priceConfig['0.1'] + 'sun'} />
-                        </div>
-                        <div style={{flex:'3 0 200px'}}>
-                          <Statistic title="1天价格" value={payConfig?.priceConfig['1'] + 'sun'} />
-                        </div>
-                        <div style={{flex:'3 0 200px'}}>
-                          <Statistic title="3天价格" value={payConfig?.priceConfig['3'] + 'sun'} />
-                        </div>
-                        <div style={{flex:'3 0 200px'}}>
-                          <Statistic title="10天价格" value={payConfig?.priceConfig['10'] + 'sun'} />
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }
               </Card>
             </Col>
           </Row>
