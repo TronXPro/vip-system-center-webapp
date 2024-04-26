@@ -4,28 +4,28 @@ const webpack = require('webpack');
 // dev环境的配置
 
 module.exports = {
-  // devServer: {
-  //   port: 8000,
-  //   proxy: {
-  //     '/user': {
-  //       target: 'https://test-trade.checkcat450.me/tradebot',
-  //       changeOrigin: true,
-  //       // pathRewrite: {
-  //       //   '^/api': ''
-  //       // }
-  //     }
-  //   }
-  // },
-  webpack: {
-    configure: (webpackConfig) => {
-      webpackConfig.plugins.push(
-        new webpack.DefinePlugin({
-          'process.env.REACT_APP_API_URL': JSON.stringify('https://test-trade.checkcat450.me/tradebot'),
-        })
-      );
-
-      return webpackConfig;
-    },
+  devServer: {
+    port: 8000,
+    proxy: {
+      '/api': {
+        target: 'https://test-trade.checkcat450.me',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   },
+  // webpack: {
+  //   configure: (webpackConfig) => {
+  //     webpackConfig.plugins.push(
+  //       new webpack.DefinePlugin({
+  //         'process.env.REACT_APP_API_URL': JSON.stringify('https://test-trade.checkcat450.me/tradebot'),
+  //       })
+  //     );
+
+  //     return webpackConfig;
+  //   },
+  // },
   plugins: [{ plugin: CracoLessPlugin }],
 };
