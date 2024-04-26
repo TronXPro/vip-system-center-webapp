@@ -11,14 +11,15 @@ export default function Login() {
   const onFinish = (values: any) => {
     // const encryptStr = aesEncrypt(userInfoStr);
     userLogin({accountName: values.userName, password: values.password}).then((res: any) => {
-      const { data, msg, success } = res; 
+      console.log('res', res)
+      const { data , success } = res; 
       if(success) {
         message.info('登录成功')
         const { accountName, token, uuid} = data
         setUserId(uuid)
         setUserName(accountName)
         setUserToken(token)
-        // navigate('/home')
+        navigate('/home')
       } else {
         message.error('账号或密码错误')
       }

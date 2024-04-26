@@ -20,18 +20,13 @@ instance.interceptors.request.use(
 
 // 响应拦截
 instance.interceptors.response.use(res => {
-  console.log('----', res)
-  
   const resData = (res.data || {});
   const reqUrl = (res.config.url || null);
   const { status, data, message: messageContent } = resData;
-  // if(status !== 200) {
-  //   // 错误提示
-  //   if(message) {
-  //     message.error(messageContent);
-  //   }
-  // }
   return resData as any
+}, res => {
+  const resData = (res.data || {});
+  return resData
 })
 
 export default instance;
