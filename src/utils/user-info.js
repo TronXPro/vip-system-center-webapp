@@ -2,9 +2,9 @@
  * 存储/获取 user id
  */
 
-const KEY = 'USER_ID'
-const USER_NAME_KEY = 'USER_NAME'
-const USER_TOKEN_KEY = 'USER_TOKEN'
+const KEY = 'uuid'
+const USER_NAME_KEY = 'accountName'
+const USER_TOKEN_KEY = 'token'
 // 设置用户ID
 export function setUserId(value) {
   const item = {
@@ -25,8 +25,6 @@ export function getUserId() {
   } catch (error) {
     setUserLoginOut();
   }
-  
-  
 }
 // 移除用户的ID
 export function removeUserId() {
@@ -63,6 +61,7 @@ export function removeUserToken() {
 export function setUserLoginOut() {
   removeUserId();
   removeUserName();
+  removeUserToken();
   // eslint-disable-next-line no-restricted-globals
   location.href ='/login'
 }

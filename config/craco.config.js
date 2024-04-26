@@ -18,7 +18,7 @@ module.exports = {
     configure: (webpackConfig) => {
       webpackConfig.plugins.push(
         new webpack.DefinePlugin({
-          'process.env.REACT_APP_API_URL': JSON.stringify('https://api.diditron.net'),
+          'process.env.REACT_APP_API_URL': JSON.stringify('https://test-trade.checkcat450.me/tradebot'),
         })
       );
 

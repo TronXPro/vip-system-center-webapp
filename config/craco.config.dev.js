@@ -4,23 +4,23 @@ const webpack = require('webpack');
 // dev环境的配置
 
 module.exports = {
-  devServer: {
-    port: 8000,
-    // proxy: {
-    //   '/api': {
-    //     target: 'https://api.gas52.com/',
-    //     changeOrigin: true,
-    //   }
-    // }
-    // proxy: {
-    //   '/api': 'http://localhost:2626/'
-    // }
-  },
+  // devServer: {
+  //   port: 8000,
+  //   proxy: {
+  //     '/user': {
+  //       target: 'https://test-trade.checkcat450.me/tradebot',
+  //       changeOrigin: true,
+  //       // pathRewrite: {
+  //       //   '^/api': ''
+  //       // }
+  //     }
+  //   }
+  // },
   webpack: {
     configure: (webpackConfig) => {
       webpackConfig.plugins.push(
         new webpack.DefinePlugin({
-          'process.env.REACT_APP_API_URL': JSON.stringify('http://api.diditron.info'),
+          'process.env.REACT_APP_API_URL': JSON.stringify('https://test-trade.checkcat450.me/tradebot'),
         })
       );
 

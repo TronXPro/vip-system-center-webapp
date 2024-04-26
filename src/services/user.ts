@@ -31,7 +31,7 @@ export async function registerUser(params: {}) {
 
 // 用户登录
 export async function userLogin(params: {}) {
-  const url = 'api/open/login ';
+  const url = '/user/login';
   const data = await axios.post(url, {
     ...params
   })

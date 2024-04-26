@@ -31,13 +31,7 @@ instance.interceptors.response.use(res => {
   //     message.error(messageContent);
   //   }
   // }
-  if(reqUrl === "/api/open/freeze-order") {
-    return {
-      data: data,
-      message: messageContent
-    }
-  }
-  return data as any
+  return resData as any
 })
 
 export default instance;
