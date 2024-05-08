@@ -163,11 +163,11 @@ export default function Home() {
                   </List.Item>
                   <List.Item
                     style={{ overflow: 'auto' }}
-                    actions={[
-                      <Button type='link' onClick={handleChangePasswordClick}>
-                        修改密码
-                      </Button>,
-                    ]}
+                    // actions={[
+                    //   <Button type='link' onClick={handleChangePasswordClick}>
+                    //     修改密码
+                    //   </Button>,
+                    // ]}
                   >
                     <List.Item.Meta
                       title='邮箱:'
@@ -177,11 +177,11 @@ export default function Home() {
                   </List.Item>
                   <List.Item
                     style={{ overflow: 'auto' }}
-                    actions={[
-                      <Button type='link' onClick={handleBingClick}>
-                        {walletBindStatus === false ? '绑定钱包' : '编辑'}
-                      </Button>,
-                    ]}
+                    // actions={[
+                    //   <Button type='link' onClick={handleBingClick}>
+                    //     {walletBindStatus === false ? '绑定钱包' : '编辑'}
+                    //   </Button>,
+                    // ]}
                   >
                     <List.Item.Meta
                       title='Tron钱包地址:'
