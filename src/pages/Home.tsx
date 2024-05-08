@@ -31,6 +31,8 @@ export default function Home() {
     useState(false);
   const [isChangePasswordModalOpen, setisChangePasswordModalOpen] =
     useState(false);
+  const [isExChangePointsModalOpen, setisExChangePointsModalOpen] =
+    useState(false);
   const [loading, setLoading] = useState(false);
   const [payConfig, setPayConfig] = useState<any>({});
   const [messageApi, contextHolder] = message.useMessage();
@@ -39,8 +41,9 @@ export default function Home() {
   const handleBingClick = () => {
     setisBindWalletAddressModalOpen(true);
   };
+  // 点击兑换按钮
   const handleWithDrawClick = () => {
-    window.open('https://t.me/jamestract', '_blank');
+    setisExChangePointsModalOpen(true);
   };
   // 处理修改密码
   const handleChangePasswordClick = () => {
@@ -93,6 +96,14 @@ export default function Home() {
   const handleBindWalletAddressCancel = () => {
     setisBindWalletAddressModalOpen(false);
     setWalletAddress(userInfo.walletAddress);
+  };
+  // 点击兑换的确认按钮
+  const handleExChangePointsModalOk = () => {
+    setisExChangePointsModalOpen(false);
+  };
+  // 点击兑换的取消按钮
+  const handleExChangePointsModalCancel = () => {
+    setisExChangePointsModalOpen(false);
   };
   const updateUserDetail = () => {
     getUserDetail(userName).then((res: any) => {
@@ -246,6 +257,18 @@ export default function Home() {
             </Button>
           </Form.Item>
         </Form>
+      </Modal>
+      <Modal
+        title='兑换积分'
+        open={isExChangePointsModalOpen}
+        onOk={handleExChangePointsModalOk}
+        onCancel={handleExChangePointsModalCancel}
+        okText='确认'
+        cancelText='取消'
+      >
+        <p>兑换积分: 10积分</p>
+        <p>积分兑换的钱将稍后转入到钱包。</p>
+        <p>有任何问题请联系客服！</p>
       </Modal>
     </>
   );
