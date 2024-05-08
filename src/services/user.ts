@@ -49,3 +49,10 @@ export async function changePass(params: { userId: string; password: string }) {
   });
   return data;
 }
+
+// 提现积分
+export async function addApplyPoint(params: any) {
+  const url = 'api/dashboard/user/applyPoint';
+  const data = await axios.post(url, { ...params });
+  return data;
+}

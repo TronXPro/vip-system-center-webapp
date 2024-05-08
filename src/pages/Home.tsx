@@ -15,10 +15,20 @@ import {
 } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getUserDetail, editUserDetail, changePass } from '../services/user';
+import {
+  getUserDetail,
+  editUserDetail,
+  changePass,
+  addApplyPoint,
+} from '../services/user';
 import { getPayConfig } from '../services/toolkit';
 import { loginReducer } from '../store/userReducer';
-import { getUserName, setUserLoginOut, setUserToken } from '../utils/user-info';
+import {
+  getUserId,
+  getUserName,
+  setUserLoginOut,
+  setUserToken,
+} from '../utils/user-info';
 import styles from './Home.module.less';
 import NavTitle from '../components/NavTitle';
 
@@ -100,6 +110,21 @@ export default function Home() {
   // 点击兑换的确认按钮
   const handleExChangePointsModalOk = () => {
     setisExChangePointsModalOpen(false);
+    addApplyPoint({
+      uuid: getUserId(),
+      actionType: '001',
+      desc: '用户提现',
+      amount: userInfo.credits,
+    }).then((res: any) => {
+      console.log('data', res);
+      const { data, success } = res;
+      if (success) {
+        message.success('提交成功！');
+      } else {
+        message.success('申请失败，请联系管理员');
+      }
+      updateUserDetail();
+    });
   };
   // 点击兑换的取消按钮
   const handleExChangePointsModalCancel = () => {
@@ -155,7 +180,12 @@ export default function Home() {
                   <List.Item
                     style={{ overflow: 'auto' }}
                     actions={[
-                      <Button onClick={handleWithDrawClick}>提现</Button>,
+                      <Button
+                        disabled={userInfo.credits == 0}
+                        onClick={handleWithDrawClick}
+                      >
+                        提现
+                      </Button>,
                     ]}
                   >
                     <List.Item.Meta title='账户积分:' />
@@ -266,7 +296,7 @@ export default function Home() {
         okText='确认'
         cancelText='取消'
       >
-        <p>兑换积分: 10积分</p>
+        <p>兑换积分: {userInfo.credits}积分</p>
         <p>积分兑换的钱将稍后转入到钱包。</p>
         <p>有任何问题请联系客服！</p>
       </Modal>
