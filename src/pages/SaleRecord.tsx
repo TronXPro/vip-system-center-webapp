@@ -57,7 +57,7 @@ export default function SaleRecord() {
       const { data, success } = res;
       if (success) {
         console.log('data', data);
-        setTableData(data);
+        setTableData(data.list);
       } else {
         setTableData([]);
       }
@@ -90,6 +90,22 @@ export default function SaleRecord() {
       width: 100,
     },
     {
+      title: '记录类型',
+      dataIndex: 'actionType',
+      key: 'actionType',
+      width: 100,
+      render: (text: any) => {
+        const actionTypeList: any = {
+          '001': '积分提现',
+          '002': '购买节点',
+          '003': '购买服务商',
+          '004': '充值U',
+          '005': '分红',
+        };
+        return <div color='success'>{actionTypeList[text]}</div>;
+      },
+    },
+    {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
@@ -104,7 +120,7 @@ export default function SaleRecord() {
   return (
     <>
       {contextHolder}
-      <NavTitle title='租用记录' />
+      <NavTitle title='积分记录' />
       <div className={styles.container}>
         <Table
           loading={loading}
