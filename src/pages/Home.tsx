@@ -151,7 +151,7 @@ export default function Home() {
   };
   useEffect(() => {
     updateUserDetail();
-    updatePayConfig();
+    // updatePayConfig();
   }, []);
 
   useEffect(() => {
