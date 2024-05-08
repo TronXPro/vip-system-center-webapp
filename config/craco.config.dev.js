@@ -1,4 +1,4 @@
-const CracoLessPlugin = require("craco-less");
+const CracoLessPlugin = require('craco-less');
 const webpack = require('webpack');
 
 // dev环境的配置
@@ -8,13 +8,14 @@ module.exports = {
     port: 8000,
     proxy: {
       '/api': {
-        target: 'https://test-trade.checkcat450.me',
+        // target: 'https://test-trade.checkcat450.me',
+        target: 'http://localhost:8081',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': ''
-        }
-      }
-    }
+          '^/api': '',
+        },
+      },
+    },
   },
   // webpack: {
   //   configure: (webpackConfig) => {

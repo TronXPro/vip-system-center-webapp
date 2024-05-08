@@ -2,23 +2,23 @@
  * 存储/获取 user id
  */
 
-const KEY = 'uuid'
-const USER_NAME_KEY = 'accountName'
-const USER_TOKEN_KEY = 'token'
+const KEY = 'uuid';
+const USER_NAME_KEY = 'accountName';
+const USER_TOKEN_KEY = 'token';
 // 设置用户ID
 export function setUserId(value) {
   const item = {
     value: value,
-    expiration: new Date().getTime() + 1 * 60 * 60 * 1000 // 过期时间
-  }
+    expiration: new Date().getTime() + 1 * 60 * 60 * 1000, // 过期时间
+  };
   localStorage.setItem(KEY, JSON.stringify(item));
 }
 // 获取用户的ID
 export function getUserId() {
   try {
-    const item = JSON.parse(localStorage.getItem(KEY))
-    if(item && new Date().getTime() < item.expiration) {
-      return item.value
+    const item = JSON.parse(localStorage.getItem(KEY));
+    if (item && new Date().getTime() < item.expiration) {
+      return item.value;
     } else {
       setUserLoginOut();
     }
@@ -28,7 +28,7 @@ export function getUserId() {
 }
 // 移除用户的ID
 export function removeUserId() {
-  localStorage.removeItem(KEY)
+  localStorage.removeItem(KEY);
 }
 
 // 设置用户名字
@@ -41,20 +41,21 @@ export function getUserName() {
 }
 // 移除用户的名字
 export function removeUserName() {
-  localStorage.removeItem(USER_NAME_KEY)
+  localStorage.removeItem(USER_NAME_KEY);
 }
 
 // 设置用户Token
 export function setUserToken(value) {
-  return localStorage.setItem(USER_TOKEN_KEY , value)
+  console.log('USER_TOKEN_KEY', value);
+  return localStorage.setItem(USER_TOKEN_KEY, value);
 }
 // 获取用户的Token
 export function getUserToken() {
-  return localStorage.getItem(USER_TOKEN_KEY)
+  return localStorage.getItem(USER_TOKEN_KEY);
 }
 // 移除用户Token
 export function removeUserToken() {
-  return localStorage.removeItem(USER_TOKEN_KEY)
+  return localStorage.removeItem(USER_TOKEN_KEY);
 }
 
 // 退出登录
@@ -63,5 +64,5 @@ export function setUserLoginOut() {
   removeUserName();
   removeUserToken();
   // eslint-disable-next-line no-restricted-globals
-  location.href ='/login'
+  location.href = '/login';
 }
