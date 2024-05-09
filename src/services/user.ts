@@ -56,3 +56,17 @@ export async function addApplyPoint(params: any) {
   const data = await axios.post(url, { ...params });
   return data;
 }
+
+// 获取配置
+export async function getPaymentConfig() {
+  const url = '/api/dashboard/user/getPaymentConfig';
+  const data = await axios.get(url);
+  return data;
+}
+
+// 用积分兑换身份
+export async function updateSubscriptions(params: any) {
+  const url = 'api/dashboard/user/updateSubscriptions';
+  const data = await axios.post(url, { ...params });
+  return data;
+}

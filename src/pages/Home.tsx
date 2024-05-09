@@ -6,12 +6,12 @@ import {
   Input,
   Modal,
   Row,
-  Space,
   message,
   Form,
   Spin,
   List,
-  Statistic,
+  Radio,
+  Space,
 } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -20,6 +20,8 @@ import {
   editUserDetail,
   changePass,
   addApplyPoint,
+  getPaymentConfig,
+  updateSubscriptions,
 } from '../services/user';
 import { getPayConfig } from '../services/toolkit';
 import { loginReducer } from '../store/userReducer';
@@ -33,8 +35,9 @@ import styles from './Home.module.less';
 import NavTitle from '../components/NavTitle';
 
 export default function Home() {
-  const roleTypeList = {
-    1: '普通用户',
+  let purchaseAccountType: any = null;
+  const roleTypeList: any = {
+    1: '会员',
     2: '节点用户',
     3: '服务商',
   };
@@ -48,16 +51,17 @@ export default function Home() {
     useState(false);
   const [isExChangePointsModalOpen, setisExChangePointsModalOpen] =
     useState(false);
-  const [isPurchaseAccountModalOpen, setisPurchaseAccountModalOpen] =
+  const [isPurchaseMenberModalOpen, setisPurchaseMenberModalOpen] =
+    useState(false);
+  const [isPurchaseNodeModalOpen, setisPurchaseNodeModalOpen] = useState(false);
+  const [isPurchaseServerModalOpen, setisPurchaseServerModalOpen] =
     useState(false);
   const [loading, setLoading] = useState(false);
   const [payConfig, setPayConfig] = useState<any>({});
+  const [userLevelInfo, setUserLevelInfo] = useState<any>({ roleType: -9999 });
   const [messageApi, contextHolder] = message.useMessage();
   const userName = getUserName();
-  const nav = useNavigate();
-  const handleBingClick = () => {
-    setisBindWalletAddressModalOpen(true);
-  };
+
   // 点击兑换按钮
   const handleWithDrawClick = () => {
     setisExChangePointsModalOpen(true);
@@ -137,13 +141,66 @@ export default function Home() {
   const handleExChangePointsModalCancel = () => {
     setisExChangePointsModalOpen(false);
   };
-  // 选购账户确认按钮
+  // 选购会员账户确认按钮
   const handlePurchaseAccountModalOk = () => {
-    setisPurchaseAccountModalOpen(false);
+    updateSubscriptions({
+      email: userInfo.email,
+      roleType: 1,
+      activeType: Number(purchaseAccountType),
+    }).then((res: any) => {
+      const { success } = res;
+      if (success) {
+        message.success('兑换成功');
+        updateUserDetail();
+      } else {
+        message.error('兑换失败，请联系客服！');
+      }
+    });
+    setisPurchaseMenberModalOpen(false);
   };
-  // 选购账户取消按钮
+  // 选购会员账户取消按钮
   const handlePurchaseAccountModalCancel = () => {
-    setisPurchaseAccountModalOpen(false);
+    setisPurchaseMenberModalOpen(false);
+  };
+  // 选购节点账户确认按钮
+  const handlePurchaseNodeModalOk = () => {
+    updateSubscriptions({
+      email: userInfo.email,
+      roleType: 2,
+    }).then((res: any) => {
+      const { success } = res;
+      if (success) {
+        message.success('兑换节点成功');
+        updateUserDetail();
+      } else {
+        message.error('兑换节点失败，请联系客服！');
+      }
+    });
+    setisPurchaseNodeModalOpen(false);
+  };
+  // 选购节点账户取消按钮
+  const handlePurchaseNodeModalCancel = () => {
+    setisPurchaseNodeModalOpen(false);
+  };
+  // 选购服务商账户确认按钮
+  const handlePurchaseServerModalOk = () => {
+    updateSubscriptions({
+      email: userInfo.email,
+      roleType: 3,
+    }).then((res: any) => {
+      const { success } = res;
+      if (success) {
+        message.success('兑换服务商成功');
+        updateUserDetail();
+      } else {
+        message.error('兑换服务商失败，请联系客服！');
+      }
+    });
+    setisPurchaseServerModalOpen(false);
+  };
+  // 选购服务商账户取消按钮
+  const handlePurchaseServerModalCancel = () => {
+    setisPurchaseServerModalOpen(false);
   };
   const updateUserDetail = () => {
     getUserDetail(userName).then((res: any) => {
@@ -159,15 +216,30 @@ export default function Home() {
   };
 
   const updatePayConfig = () => {
-    getPayConfig(userName).then((data: any) => {
-      console.log('-data', data);
-      setPayConfig(data);
+    getPaymentConfig().then((res: any) => {
+      console.log('-data', res);
+      const { success, data } = res;
+      if (success) {
+        setPayConfig(data);
+      }
     });
   };
   useEffect(() => {
     updateUserDetail();
-    // updatePayConfig();
+    updatePayConfig();
   }, []);
+
+  useEffect(() => {
+    let curItem = { roleType: -999 };
+    if (userInfo && userInfo.subscriptions && userInfo.subscriptions.length) {
+      userInfo.subscriptions.forEach((item: any) => {
+        if (item.roleType > curItem.roleType) {
+          curItem = item;
+        }
+      });
+    }
+    setUserLevelInfo(curItem);
+  }, [userInfo]);
 
   useEffect(() => {
     if (userInfo.walletAddress) {
@@ -209,39 +281,43 @@ export default function Home() {
                   <List.Item
                     style={{ overflow: 'auto' }}
                     actions={[
-                      <Button
-                        type='primary'
-                        onClick={() => {
-                          setisPurchaseAccountModalOpen(true);
-                        }}
-                      >
-                        兑换普通用户
-                      </Button>,
-                      <Button
-                        type='primary'
-                        onClick={() => {
-                          setisPurchaseAccountModalOpen(true);
-                        }}
-                      >
-                        兑换节点
-                      </Button>,
-                      <Button
-                        type='primary'
-                        onClick={() => {
-                          setisPurchaseAccountModalOpen(true);
-                        }}
-                      >
-                        兑换服务商
-                      </Button>,
+                      userLevelInfo.roleType < 1 && (
+                        <Button
+                          type='primary'
+                          onClick={() => {
+                            setisPurchaseMenberModalOpen(true);
+                          }}
+                        >
+                          兑换会员
+                        </Button>
+                      ),
+                      userLevelInfo.roleType < 2 && (
+                        <Button
+                          type='primary'
+                          onClick={() => {
+                            setisPurchaseNodeModalOpen(true);
+                          }}
+                        >
+                          兑换节点
+                        </Button>
+                      ),
+                      userLevelInfo.roleType < 3 && (
+                        <Button
+                          type='primary'
+                          onClick={() => {
+                            setisPurchaseServerModalOpen(true);
+                          }}
+                        >
+                          兑换服务商
+                        </Button>
+                      ),
                     ]}
                   >
                     <List.Item.Meta
                       title='账户类型:'
                       description='账户类型可以通过积分来购买'
                     ></List.Item.Meta>
-                    {userInfo.subscriptions && userInfo.subscriptions.type
-                      ? userInfo.subscriptions.type.roleType
-                      : '请选择你的需要的账户类型'}
+                    {roleTypeList[userLevelInfo.roleType]}
                   </List.Item>
                   <List.Item
                     style={{ overflow: 'auto' }}
@@ -353,17 +429,77 @@ export default function Home() {
         <p>积分兑换的钱将稍后转入到钱包。</p>
         <p>有任何问题请联系客服！</p>
       </Modal>
-      {/* 购买账户类型 */}
+      {/* 购买会员 */}
       <Modal
-        title='选购账户'
-        open={isPurchaseAccountModalOpen}
+        title='兑换会员'
+        open={isPurchaseMenberModalOpen}
         onOk={handlePurchaseAccountModalOk}
         onCancel={handlePurchaseAccountModalCancel}
         okText='购买'
         cancelText='取消'
       >
-        <p></p>
-        <p>积分兑换的钱将稍后转入到钱包。</p>
+        <p>请选择会员的时间</p>
+        <div>
+          <Radio.Group
+            onChange={(e: any) => {
+              purchaseAccountType = e.target.value;
+            }}
+          >
+            <Space direction='vertical'>
+              <Radio value={1}>季度费用：{payConfig.quarterlyFee} 积分</Radio>
+              <Radio value={2}>半年费用：{payConfig.semiAnnualFee} 积分</Radio>
+              <Radio value={3}>年度费用：{payConfig.annualFee} 积分</Radio>
+            </Space>
+          </Radio.Group>
+        </div>
+      </Modal>
+      {/* 购买节点 */}
+      <Modal
+        title='兑换节点'
+        open={isPurchaseMenberModalOpen}
+        onOk={handlePurchaseAccountModalOk}
+        onCancel={handlePurchaseAccountModalCancel}
+        okText='购买'
+        cancelText='取消'
+      >
+        <p>请选择会员的时间</p>
+        <div>
+          <Radio.Group
+            onChange={(e: any) => {
+              purchaseAccountType = e.target.value;
+            }}
+          >
+            <Space direction='vertical'>
+              <Radio value={1}>季度费用：{payConfig.quarterlyFee} 积分</Radio>
+              <Radio value={2}>半年费用：{payConfig.semiAnnualFee} 积分</Radio>
+              <Radio value={3}>年度费用：{payConfig.annualFee} 积分</Radio>
+            </Space>
+          </Radio.Group>
+        </div>
+      </Modal>
+      {/* 购买节点 */}
+      <Modal
+        title='兑换节点'
+        open={isPurchaseNodeModalOpen}
+        onOk={handlePurchaseNodeModalOk}
+        onCancel={handlePurchaseNodeModalCancel}
+        okText='购买'
+        cancelText='取消'
+      >
+        <p>节点:</p>
+        <div>年度费用：{payConfig.normalNodeFee} 积分</div>
+      </Modal>
+      {/* 购买服务商 */}
+      <Modal
+        title='兑换服务商'
+        open={isPurchaseServerModalOpen}
+        onOk={handlePurchaseServerModalOk}
+        onCancel={handlePurchaseServerModalCancel}
+        okText='购买'
+        cancelText='取消'
+      >
+        <p>服务商:</p>
+        <div>年度费用：{payConfig.serverNodeFee} 积分</div>
       </Modal>
     </>
   );
