@@ -35,8 +35,8 @@ import styles from './Home.module.less';
 import NavTitle from '../components/NavTitle';
 
 export default function Home() {
-  let purchaseAccountType: any = null;
   const roleTypeList: any = {
+    [-999]: '普通用户',
     1: '会员',
     2: '节点用户',
     3: '服务商',
@@ -56,6 +56,7 @@ export default function Home() {
   const [isPurchaseNodeModalOpen, setisPurchaseNodeModalOpen] = useState(false);
   const [isPurchaseServerModalOpen, setisPurchaseServerModalOpen] =
     useState(false);
+  const [purchaseAccountType, setPurchaseAccountType] = useState(1);
   const [loading, setLoading] = useState(false);
   const [payConfig, setPayConfig] = useState<any>({});
   const [userLevelInfo, setUserLevelInfo] = useState<any>({ roleType: -9999 });
@@ -441,32 +442,9 @@ export default function Home() {
         <p>请选择会员的时间</p>
         <div>
           <Radio.Group
+            value={purchaseAccountType}
             onChange={(e: any) => {
-              purchaseAccountType = e.target.value;
-            }}
-          >
-            <Space direction='vertical'>
-              <Radio value={1}>季度费用：{payConfig.quarterlyFee} 积分</Radio>
-              <Radio value={2}>半年费用：{payConfig.semiAnnualFee} 积分</Radio>
-              <Radio value={3}>年度费用：{payConfig.annualFee} 积分</Radio>
-            </Space>
-          </Radio.Group>
-        </div>
-      </Modal>
-      {/* 购买节点 */}
-      <Modal
-        title='兑换节点'
-        open={isPurchaseMenberModalOpen}
-        onOk={handlePurchaseAccountModalOk}
-        onCancel={handlePurchaseAccountModalCancel}
-        okText='购买'
-        cancelText='取消'
-      >
-        <p>请选择会员的时间</p>
-        <div>
-          <Radio.Group
-            onChange={(e: any) => {
-              purchaseAccountType = e.target.value;
+              setPurchaseAccountType(e.target.value);
             }}
           >
             <Space direction='vertical'>
