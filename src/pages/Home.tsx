@@ -33,6 +33,11 @@ import styles from './Home.module.less';
 import NavTitle from '../components/NavTitle';
 
 export default function Home() {
+  const roleTypeList = {
+    1: '普通用户',
+    2: '节点用户',
+    3: '服务商',
+  };
   const dispatch = useDispatch();
   const [walletBindStatus, setWalletBindStatus] = useState(false);
   const [userInfo, setUserInfo] = useState<any>({});
@@ -42,6 +47,8 @@ export default function Home() {
   const [isChangePasswordModalOpen, setisChangePasswordModalOpen] =
     useState(false);
   const [isExChangePointsModalOpen, setisExChangePointsModalOpen] =
+    useState(false);
+  const [isPurchaseAccountModalOpen, setisPurchaseAccountModalOpen] =
     useState(false);
   const [loading, setLoading] = useState(false);
   const [payConfig, setPayConfig] = useState<any>({});
@@ -130,6 +137,14 @@ export default function Home() {
   const handleExChangePointsModalCancel = () => {
     setisExChangePointsModalOpen(false);
   };
+  // 选购账户确认按钮
+  const handlePurchaseAccountModalOk = () => {
+    setisPurchaseAccountModalOpen(false);
+  };
+  // 选购账户取消按钮
+  const handlePurchaseAccountModalCancel = () => {
+    setisPurchaseAccountModalOpen(false);
+  };
   const updateUserDetail = () => {
     getUserDetail(userName).then((res: any) => {
       // dispatch(loginReducer({ ...data }));
@@ -190,6 +205,43 @@ export default function Home() {
                   >
                     <List.Item.Meta title='账户积分:' />
                     {userInfo.credits + ' 积分'}
+                  </List.Item>
+                  <List.Item
+                    style={{ overflow: 'auto' }}
+                    actions={[
+                      <Button
+                        type='primary'
+                        onClick={() => {
+                          setisPurchaseAccountModalOpen(true);
+                        }}
+                      >
+                        兑换普通用户
+                      </Button>,
+                      <Button
+                        type='primary'
+                        onClick={() => {
+                          setisPurchaseAccountModalOpen(true);
+                        }}
+                      >
+                        兑换节点
+                      </Button>,
+                      <Button
+                        type='primary'
+                        onClick={() => {
+                          setisPurchaseAccountModalOpen(true);
+                        }}
+                      >
+                        兑换服务商
+                      </Button>,
+                    ]}
+                  >
+                    <List.Item.Meta
+                      title='账户类型:'
+                      description='账户类型可以通过积分来购买'
+                    ></List.Item.Meta>
+                    {userInfo.subscriptions && userInfo.subscriptions.type
+                      ? userInfo.subscriptions.type.roleType
+                      : '请选择你的需要的账户类型'}
                   </List.Item>
                   <List.Item
                     style={{ overflow: 'auto' }}
@@ -288,6 +340,7 @@ export default function Home() {
           </Form.Item>
         </Form>
       </Modal>
+      {/* 兑换积分 */}
       <Modal
         title='兑换积分'
         open={isExChangePointsModalOpen}
@@ -299,6 +352,18 @@ export default function Home() {
         <p>兑换积分: {userInfo.credits}积分</p>
         <p>积分兑换的钱将稍后转入到钱包。</p>
         <p>有任何问题请联系客服！</p>
+      </Modal>
+      {/* 购买账户类型 */}
+      <Modal
+        title='选购账户'
+        open={isPurchaseAccountModalOpen}
+        onOk={handlePurchaseAccountModalOk}
+        onCancel={handlePurchaseAccountModalCancel}
+        okText='购买'
+        cancelText='取消'
+      >
+        <p></p>
+        <p>积分兑换的钱将稍后转入到钱包。</p>
       </Modal>
     </>
   );
