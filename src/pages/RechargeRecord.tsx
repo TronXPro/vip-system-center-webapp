@@ -4,7 +4,9 @@ import { Table } from 'antd';
 // import { useSelector } from 'react-redux'
 import { scalerSunToTrx } from '../utils/tool';
 import NavTitle from '../components/NavTitle';
-import { getUserName } from '../utils/user-info';
+import { getUserId, getUserName } from '../utils/user-info';
+import { getPointRecord } from '../services/sale';
+import moment from 'moment';
 
 export default function RechargeRecord() {
   // const { username } = useSelector( (state:any) => state.user)
@@ -27,28 +29,41 @@ export default function RechargeRecord() {
   };
   const tableColumns: any = [
     {
+      title: '时间',
+      dataIndex: 'applyTime',
+      key: 'applyTime',
+      render: (text: any) => {
+        text = Number(text);
+        return moment(text).format('YYYY-MM-DD HH:mm:ss');
+      },
+    },
+    {
       title: '充值哈希',
-      dataIndex: 'hash',
-      key: 'hash',
+      dataIndex: 'rechargeHash',
+      key: 'rechargeHash',
     },
     {
       title: '充值地址',
-      dataIndex: 'from',
-      key: 'from',
+      dataIndex: 'rechargeAddress',
+      key: 'rechargeAddress',
     },
     {
       title: '充值金额',
-      dataIndex: 'amount',
-      key: 'amount',
+      dataIndex: 'rechargeNum',
+      key: 'rechargeNum',
       width: 100,
       fixed: 'right',
-      render: (text: any) => {
-        return scalerSunToTrx(text) + 'TRX';
-      },
     },
   ];
   useEffect(() => {
-    // setLoading(true)
+    const uuid = getUserId();
+    getPointRecord({ uuid, actionType: '004' }).then((res: any) => {
+      console.log(res);
+      const { success, data } = res;
+      if (success) {
+        setTableData(data.list);
+      }
+    });
   }, [JSON.stringify(tableParams)]);
   return (
     <>
