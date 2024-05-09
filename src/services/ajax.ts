@@ -2,7 +2,9 @@ import { message } from 'antd';
 import axios from 'axios';
 import { getUserToken } from '../utils/user-info';
 const apiUrl = process.env.REACT_APP_API_URL;
+const isProduction = process.env.NODE_ENV === 'production';
 console.log('apiUrl', apiUrl);
+console.log('isProduction', isProduction);
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -14,6 +16,10 @@ instance.interceptors.request.use(
   (config) => {
     const token = getUserToken();
     config.headers['authorization'] = `Bearer ${token}`;
+    // 如果是 isProduction，就将接口中的 /api 去掉
+    if (isProduction) {
+      config.url = config.url?.replace('/api', '');
+    }
     return config;
   },
   (error) => Promise.reject(error)
