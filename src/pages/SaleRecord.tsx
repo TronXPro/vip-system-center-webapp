@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styles from './SaleRecord.module.less';
-import { Table, Tag, Button, Modal, List, message } from 'antd';
+import { Table, Button, Modal, List, message } from 'antd';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { getPointRecord } from '../services/sale';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { scalerSunToTrx, translateRentTime } from '../utils/tool';
 import NavTitle from '../components/NavTitle';
-import { getUserId } from '../utils/user-info';
+import { getUserId, getUserEmail } from '../utils/user-info';
 
 export default function SaleRecord() {
-  const { username } = useSelector((state: any) => state.user);
   const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState<any>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,7 +51,10 @@ export default function SaleRecord() {
   ];
   const updatePointRecord = () => {
     const uuid = getUserId();
-    getPointRecord({ uuid }).then((res: any) => {
+    const email = getUserEmail();
+    setLoading(true);
+    getPointRecord({ uuid, email }).then((res: any) => {
+      setLoading(false);
       const { data, success } = res;
       if (success) {
         console.log('data', data);

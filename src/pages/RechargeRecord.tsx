@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styles from './RechargeRecord.module.less';
 import { Table } from 'antd';
-// import { useSelector } from 'react-redux'
-import { scalerSunToTrx } from '../utils/tool';
 import NavTitle from '../components/NavTitle';
-import { getUserId, getUserName } from '../utils/user-info';
+import { getUserId, getUserEmail } from '../utils/user-info';
 import { getPointRecord } from '../services/sale';
 import moment from 'moment';
 
 export default function RechargeRecord() {
-  // const { username } = useSelector( (state:any) => state.user)
-  const username = getUserName();
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
@@ -57,7 +53,10 @@ export default function RechargeRecord() {
   ];
   useEffect(() => {
     const uuid = getUserId();
-    getPointRecord({ uuid, actionType: '004' }).then((res: any) => {
+    const email = getUserEmail();
+    setLoading(true);
+    getPointRecord({ uuid, actionType: '004', email }).then((res: any) => {
+      setLoading(false);
       console.log(res);
       const { success, data } = res;
       if (success) {
@@ -65,6 +64,7 @@ export default function RechargeRecord() {
       }
     });
   }, [JSON.stringify(tableParams)]);
+
   return (
     <>
       <NavTitle title='充值记录' />

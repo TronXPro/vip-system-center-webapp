@@ -5,6 +5,8 @@
 const KEY = 'uuid';
 const USER_NAME_KEY = 'accountName';
 const USER_TOKEN_KEY = 'token';
+const USER_EMAIL_KEY = 'email';
+
 // 设置用户ID
 export function setUserId(value) {
   const item = {
@@ -58,11 +60,25 @@ export function removeUserToken() {
   return localStorage.removeItem(USER_TOKEN_KEY);
 }
 
+// 设置用户 email
+export function setUserEmail(value) {
+  localStorage.setItem(USER_EMAIL_KEY, value);
+}
+// 获取用户的 email
+export function getUserEmail() {
+  return localStorage.getItem(USER_EMAIL_KEY);
+}
+// 移除用户 email
+export function removeUserEmail() {
+  localStorage.removeItem(USER_EMAIL_KEY);
+}
+
 // 退出登录
 export function setUserLoginOut() {
   removeUserId();
   removeUserName();
   removeUserToken();
+  removeUserEmail();
   // eslint-disable-next-line no-restricted-globals
   location.href = '/login';
 }

@@ -10,6 +10,7 @@ import {
   setUserId,
   setUserName,
   setUserToken,
+  setUserEmail,
 } from '../utils/user-info';
 
 export default function Login() {
@@ -25,10 +26,11 @@ export default function Login() {
         const { data, success } = res;
         if (success) {
           message.info('登录成功');
-          const { accountName, token, uuid } = data;
+          const { accountName, token, uuid, email } = data;
           setUserId(uuid);
           setUserName(accountName);
           setUserToken(token);
+          setUserEmail(email);
           navigate('/home');
         } else {
           setLoading(false);
