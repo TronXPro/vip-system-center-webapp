@@ -398,7 +398,7 @@ export default function Home() {
                           3.必须使用账号绑定的钱包地址转账充值才可以正常入账。
                         </div>
                         <div style={{ color: 'rgb(38, 161, 123)' }}>
-                          4.转账金额必须大于1TRX
+                          4.转账金额必须大于1USDT
                         </div>
                       </Col>
                     </Row>
