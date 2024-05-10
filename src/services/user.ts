@@ -14,9 +14,8 @@ export async function getUserDetail(userName: any) {
 
 // 编辑用户
 export async function editUserDetail(params: any) {
-  const url = '/api/open/edit-user-info';
+  const url = '/api//dashboard/user/bindAccountWalletAddress';
   const data = await axios.post(url, {
-    _id: params.userId,
     ...params,
   });
   return data;

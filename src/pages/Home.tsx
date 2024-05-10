@@ -62,7 +62,9 @@ export default function Home() {
   const [userLevelInfo, setUserLevelInfo] = useState<any>({ roleType: -9999 });
   const [messageApi, contextHolder] = message.useMessage();
   const userName = getUserName();
-
+  const handleBingClick = () => {
+    setisBindWalletAddressModalOpen(true);
+  };
   // 点击兑换按钮
   const handleWithDrawClick = () => {
     setisExChangePointsModalOpen(true);
@@ -100,7 +102,7 @@ export default function Home() {
   const handleBindWalletAddressOk = () => {
     if (walletAddress) {
       editUserDetail({
-        userName: userName,
+        email: userInfo.email,
         walletAddress: walletAddress,
       }).then((data: any) => {
         if (data) {
@@ -336,11 +338,13 @@ export default function Home() {
                   </List.Item>
                   <List.Item
                     style={{ overflow: 'auto' }}
-                    // actions={[
-                    //   <Button type='link' onClick={handleBingClick}>
-                    //     {walletBindStatus === false ? '绑定钱包' : '编辑'}
-                    //   </Button>,
-                    // ]}
+                    actions={[
+                      !userInfo.walletAddress && (
+                        <Button type='link' onClick={handleBingClick}>
+                          绑定钱包
+                        </Button>
+                      ),
+                    ]}
                   >
                     <List.Item.Meta
                       title='Tron钱包地址:'
