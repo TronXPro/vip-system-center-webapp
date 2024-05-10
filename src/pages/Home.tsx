@@ -23,6 +23,8 @@ import {
   getPaymentConfig,
   updateSubscriptions,
 } from '../services/user';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { CopyOutlined } from '@ant-design/icons';
 import { getPayConfig } from '../services/toolkit';
 import { loginReducer } from '../store/userReducer';
 import {
@@ -353,6 +355,54 @@ export default function Home() {
                     {userInfo.walletAddress}
                   </List.Item>
                 </List>
+              </Card>
+            </Col>
+            {/* 充值积分 */}
+            <Col span={24}>
+              <Card title='充值积分' style={{ height: '100%' }}>
+                <div className={styles.moduleWrap}>
+                  <Space
+                    direction='vertical'
+                    size='middle'
+                    style={{ width: '100%' }}
+                  >
+                    <span style={{ fontSize: '20px', fontWeight: 'bolder' }}>
+                      平台钱包地址
+                    </span>
+                    <Row>
+                      <Col span={8}>
+                        <CopyToClipboard
+                          text={payConfig.paymentWalletAddress}
+                          onCopy={() => {
+                            messageApi.open({
+                              type: 'success',
+                              content: '复制成功',
+                            });
+                          }}
+                        >
+                          <div className={styles.addressContentWrap}>
+                            <span>{payConfig.paymentWalletAddress}</span>
+                            <CopyOutlined />
+                          </div>
+                        </CopyToClipboard>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col span={8}>
+                        <div>1.请使用波场浏览器或手机钱包进行转账。</div>
+                        <div>
+                          2.请核对钱包地址后再转账,若转账后没查到充值金额,可联系客服找回。
+                        </div>
+                        <div style={{ color: 'rgb(38, 161, 123)' }}>
+                          3.必须使用账号绑定的钱包地址转账充值才可以正常入账。
+                        </div>
+                        <div style={{ color: 'rgb(38, 161, 123)' }}>
+                          4.转账金额必须大于1TRX
+                        </div>
+                      </Col>
+                    </Row>
+                  </Space>
+                </div>
               </Card>
             </Col>
           </Row>
