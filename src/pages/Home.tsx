@@ -127,6 +127,7 @@ export default function Home() {
   const handleExChangePointsModalOk = () => {
     setisExChangePointsModalOpen(false);
     addApplyPoint({
+      email: userInfo.email,
       uuid: getUserId(),
       actionType: '001',
       desc: '用户提现',
