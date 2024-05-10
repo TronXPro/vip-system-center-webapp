@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Button,
   Card,
@@ -13,8 +13,8 @@ import {
   Radio,
   Space,
 } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import QRCode from 'qrcode';
 import {
   getUserDetail,
   editUserDetail,
@@ -25,14 +25,7 @@ import {
 } from '../services/user';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { CopyOutlined } from '@ant-design/icons';
-import { getPayConfig } from '../services/toolkit';
-import { loginReducer } from '../store/userReducer';
-import {
-  getUserId,
-  getUserName,
-  setUserLoginOut,
-  setUserToken,
-} from '../utils/user-info';
+import { getUserId, getUserName, setUserLoginOut } from '../utils/user-info';
 import styles from './Home.module.less';
 import NavTitle from '../components/NavTitle';
 
@@ -43,6 +36,7 @@ export default function Home() {
     2: '节点用户',
     3: '服务商',
   };
+  const qrCodeRef = useRef(null);
   const dispatch = useDispatch();
   const [walletBindStatus, setWalletBindStatus] = useState(false);
   const [userInfo, setUserInfo] = useState<any>({});
@@ -227,9 +221,17 @@ export default function Home() {
       const { success, data } = res;
       if (success) {
         setPayConfig(data);
+        renderQrCode(data.paymentWalletAddress);
       }
     });
   };
+
+  const renderQrCode = (text: string) => {
+    QRCode.toCanvas(qrCodeRef.current, text, function (error) {
+      if (error) console.error(error);
+    });
+  };
+
   useEffect(() => {
     updateUserDetail();
     updatePayConfig();
@@ -361,48 +363,54 @@ export default function Home() {
             {/* 充值积分 */}
             <Col span={24}>
               <Card title='充值积分' style={{ height: '100%' }}>
-                <div className={styles.moduleWrap}>
-                  <Space
-                    direction='vertical'
-                    size='middle'
-                    style={{ width: '100%' }}
-                  >
-                    <span style={{ fontSize: '20px', fontWeight: 'bolder' }}>
-                      平台钱包地址
-                    </span>
-                    <Row>
-                      <Col span={8}>
-                        <CopyToClipboard
-                          text={payConfig.paymentWalletAddress}
-                          onCopy={() => {
-                            messageApi.open({
-                              type: 'success',
-                              content: '复制成功',
-                            });
-                          }}
-                        >
-                          <div className={styles.addressContentWrap}>
-                            <span>{payConfig.paymentWalletAddress}</span>
-                            <CopyOutlined />
+                <div className={styles.canvasWrap}>
+                  <div className={styles.moduleWrap}>
+                    <Space
+                      direction='vertical'
+                      size='middle'
+                      style={{ width: '100%' }}
+                    >
+                      <span style={{ fontSize: '20px', fontWeight: 'bolder' }}>
+                        平台钱包地址
+                      </span>
+                      <Row>
+                        <Col span={8}>
+                          <CopyToClipboard
+                            text={payConfig.paymentWalletAddress}
+                            onCopy={() => {
+                              messageApi.open({
+                                type: 'success',
+                                content: '复制成功',
+                              });
+                            }}
+                          >
+                            <div className={styles.addressContentWrap}>
+                              <span>{payConfig.paymentWalletAddress}</span>
+                              <CopyOutlined />
+                            </div>
+                          </CopyToClipboard>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={8}>
+                          <div>1.请使用波场浏览器或手机钱包进行转账。</div>
+                          <div>
+                            2.请核对钱包地址后再转账,若转账后没查到充值金额,可联系客服找回。
                           </div>
-                        </CopyToClipboard>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col span={8}>
-                        <div>1.请使用波场浏览器或手机钱包进行转账。</div>
-                        <div>
-                          2.请核对钱包地址后再转账,若转账后没查到充值金额,可联系客服找回。
-                        </div>
-                        <div style={{ color: 'rgb(38, 161, 123)' }}>
-                          3.必须使用账号绑定的钱包地址转账充值才可以正常入账。
-                        </div>
-                        <div style={{ color: 'rgb(38, 161, 123)' }}>
-                          4.转账金额必须大于1USDT
-                        </div>
-                      </Col>
-                    </Row>
-                  </Space>
+                          <div style={{ color: 'rgb(38, 161, 123)' }}>
+                            3.必须使用账号绑定的钱包地址转账充值才可以正常入账。
+                          </div>
+                          <div style={{ color: 'rgb(38, 161, 123)' }}>
+                            4.转账金额必须大于1USDT
+                          </div>
+                        </Col>
+                      </Row>
+                    </Space>
+                  </div>
+                  <div className={styles.qrCodeWrap}>
+                    <canvas ref={qrCodeRef} className={styles.qrCode}></canvas>
+                    <span>平台钱包地址二维码</span>
+                  </div>
                 </div>
               </Card>
             </Col>
