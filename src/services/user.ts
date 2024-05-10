@@ -42,7 +42,7 @@ export async function userLogin(params: {}) {
 
 // 修改密码
 export async function changePass(params: { userId: string; password: string }) {
-  const url = 'api/open/change-password ';
+  const url = '/api/open/change-password ';
   const data = await axios.post(url, {
     _id: params.userId,
     password: params.password,
@@ -52,7 +52,7 @@ export async function changePass(params: { userId: string; password: string }) {
 
 // 提现积分
 export async function addApplyPoint(params: any) {
-  const url = 'api/dashboard/user/applyPoint';
+  const url = '/api/dashboard/user/applyPoint';
   const data = await axios.post(url, { ...params });
   return data;
 }
@@ -66,7 +66,7 @@ export async function getPaymentConfig() {
 
 // 用积分兑换身份
 export async function updateSubscriptions(params: any) {
-  const url = 'api/dashboard/user/updateSubscriptions';
+  const url = '/api/dashboard/user/updateSubscriptions';
   const data = await axios.post(url, { ...params });
   return data;
 }
