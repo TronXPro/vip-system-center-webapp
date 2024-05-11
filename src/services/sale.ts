@@ -3,8 +3,22 @@ import axios from './ajax';
 // 获取记录
 export async function getPointRecord(params: any) {
   const url = '/api/dashboard/user/getPointApplicationList';
-  const { uuid, status, actionType, email } = params;
-  const data = await axios.post(url, { uuid, status, actionType, email });
+  const {
+    uuid,
+    status,
+    actionType,
+    email,
+    pageIdx = 1,
+    pageCount = 10,
+  } = params;
+  const data = await axios.post(url, {
+    uuid,
+    status,
+    actionType,
+    email,
+    pageIdx,
+    pageCount,
+  });
   return data;
 }
 

@@ -53,7 +53,12 @@ export default function SaleRecord() {
     const uuid = getUserId();
     const email = getUserEmail();
     setLoading(true);
-    getPointRecord({ uuid, email }).then((res: any) => {
+    getPointRecord({
+      uuid,
+      email,
+      pageIdx: tableParams.pagination.current,
+      pageCount: tableParams.pagination.pageSize,
+    }).then((res: any) => {
       setLoading(false);
       const { data, success } = res;
       if (success) {
