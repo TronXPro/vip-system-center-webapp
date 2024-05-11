@@ -11,6 +11,7 @@ import {
   setUserName,
   setUserToken,
   setUserEmail,
+  setUserWalletAddress,
 } from '../utils/user-info';
 
 export default function Login() {
@@ -26,11 +27,12 @@ export default function Login() {
         const { data, success } = res;
         if (success) {
           message.info('登录成功');
-          const { accountName, token, uuid, email } = data;
+          const { accountName, token, uuid, email, walletAddress } = data;
           setUserId(uuid);
           setUserName(accountName);
           setUserToken(token);
           setUserEmail(email);
+          setUserWalletAddress(walletAddress);
           navigate('/home');
         } else {
           setLoading(false);

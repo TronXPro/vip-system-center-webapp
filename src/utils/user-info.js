@@ -6,6 +6,7 @@ const KEY = 'uuid';
 const USER_NAME_KEY = 'accountName';
 const USER_TOKEN_KEY = 'token';
 const USER_EMAIL_KEY = 'email';
+const USER_WALLET_ADDRESS_KEY = 'walletAddress';
 
 // 设置用户ID
 export function setUserId(value) {
@@ -73,12 +74,26 @@ export function removeUserEmail() {
   localStorage.removeItem(USER_EMAIL_KEY);
 }
 
+// 设置用户钱包地址
+export function setUserWalletAddress(value) {
+  localStorage.setItem(USER_WALLET_ADDRESS_KEY, value);
+}
+// 获取用户钱包地址
+export function getUserWalletAddress() {
+  return localStorage.getItem(USER_WALLET_ADDRESS_KEY);
+}
+// 移除用户钱包地址
+export function removeUserWalletAddress() {
+  localStorage.removeItem(USER_WALLET_ADDRESS_KEY);
+}
+
 // 退出登录
 export function setUserLoginOut() {
   removeUserId();
   removeUserName();
   removeUserToken();
   removeUserEmail();
+  removeUserWalletAddress();
   // eslint-disable-next-line no-restricted-globals
   location.href = '/login';
 }

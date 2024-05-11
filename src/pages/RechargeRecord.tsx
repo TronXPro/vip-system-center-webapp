@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './RechargeRecord.module.less';
 import { Table } from 'antd';
 import NavTitle from '../components/NavTitle';
-import { getUserId, getUserEmail } from '../utils/user-info';
-import { getPointRecord } from '../services/sale';
+import { getUserEmail, getUserWalletAddress } from '../utils/user-info';
+import { getRechargeRecord } from '../services/sale';
 import moment from 'moment';
 
 export default function RechargeRecord() {
@@ -52,10 +52,15 @@ export default function RechargeRecord() {
     },
   ];
   useEffect(() => {
-    const uuid = getUserId();
     const email = getUserEmail();
+    const walletAddress = getUserWalletAddress();
     setLoading(true);
-    getPointRecord({ uuid, actionType: '004', email }).then((res: any) => {
+    getRechargeRecord({
+      email,
+      walletAddress,
+      pageIdx: tableParams.pagination.current,
+      pageCount: tableParams.pagination.pageSize,
+    }).then((res: any) => {
       setLoading(false);
       console.log(res);
       const { success, data } = res;
