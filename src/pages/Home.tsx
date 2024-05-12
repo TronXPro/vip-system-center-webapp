@@ -401,7 +401,11 @@ export default function Home() {
                             3.必须使用账号绑定的钱包地址转账充值才可以正常入账。
                           </div>
                           <div style={{ color: 'rgb(38, 161, 123)' }}>
-                            4.转账金额必须大于1USDT
+                            4.转账金额必须大于 1 USDT。
+                          </div>
+                          <div style={{ color: 'rgb(38, 161, 123)' }}>
+                            5.转账后请及时到 「充值记录」 tab
+                            栏查询您是否有充值记录。
                           </div>
                         </Col>
                       </Row>
