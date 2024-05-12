@@ -47,6 +47,7 @@ export default function WithdrawalRecord() {
       title: '时间',
       dataIndex: 'applyTime',
       key: 'applyTime',
+      width: 200,
       render: (text: any) => {
         text = Number(text);
         return moment(text).format('YYYY-MM-DD HH:mm:ss');
@@ -56,11 +57,13 @@ export default function WithdrawalRecord() {
       title: '提现哈希',
       dataIndex: 'withdrawHash',
       key: 'withdrawHash',
+      width: 300,
     },
     {
       title: '提现地址',
       dataIndex: 'withdrawAddress',
       key: 'withdrawAddress',
+      width: 300,
     },
     {
       title: '提现金额(USDT)',
