@@ -44,7 +44,7 @@ export default function RechargeRecord() {
       key: 'senderAddress',
     },
     {
-      title: '充值金额',
+      title: '充值金额(USDT)',
       dataIndex: 'amount',
       key: 'amount',
       width: 100,
