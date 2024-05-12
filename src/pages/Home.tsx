@@ -147,6 +147,7 @@ export default function Home() {
     updateSubscriptions({
       email: userInfo.email,
       roleType: 1,
+      activeType: Number(purchaseAccountType),
     }).then((res: any) => {
       const { success } = res;
       if (success) {
