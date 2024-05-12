@@ -6,10 +6,15 @@ const webpack = require('webpack');
 module.exports = {
   devServer: {
     port: 8000,
+    // proxy: {
+    //   '/api': {
+    //     target: 'https://api.gas52.com/',
+    //     changeOrigin: true,
+    //   }
+    // }
     proxy: {
       '/api': {
-        // target: 'https://test-trade.checkcat450.me',
-        target: 'http://localhost:8081',
+        target: 'https://test-trade.checkcat450.me/tradebot',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '',
@@ -17,6 +22,19 @@ module.exports = {
       },
     },
   },
+  // devServer: {
+  //   port: 8000,
+  //   proxy: {
+  //     '/api': {
+  //       // target: 'https://test-trade.checkcat450.me',
+  //       target: 'http://localhost:8081',
+  //       changeOrigin: true,
+  //       pathRewrite: {
+  //         '^/api': '',
+  //       },
+  //     },
+  //   },
+  // },
   // webpack: {
   //   configure: (webpackConfig) => {
   //     webpackConfig.plugins.push(

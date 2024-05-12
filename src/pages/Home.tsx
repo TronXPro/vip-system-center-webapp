@@ -227,7 +227,7 @@ export default function Home() {
   };
 
   const renderQrCode = (text: string) => {
-    QRCode.toCanvas(qrCodeRef.current, text, function (error) {
+    QRCode.toCanvas(qrCodeRef.current, text, function (error: any) {
       if (error) console.error(error);
     });
   };
