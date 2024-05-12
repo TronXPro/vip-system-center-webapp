@@ -26,8 +26,8 @@ export default function RechargeRecord() {
   const tableColumns: any = [
     {
       title: '时间',
-      dataIndex: 'applyTime',
-      key: 'applyTime',
+      dataIndex: 'createDate',
+      key: 'createDate',
       render: (text: any) => {
         text = Number(text);
         return moment(text).format('YYYY-MM-DD HH:mm:ss');
@@ -35,20 +35,24 @@ export default function RechargeRecord() {
     },
     {
       title: '充值哈希',
-      dataIndex: 'rechargeHash',
-      key: 'rechargeHash',
+      dataIndex: 'txID',
+      key: 'txID',
     },
     {
       title: '充值地址',
-      dataIndex: 'rechargeAddress',
-      key: 'rechargeAddress',
+      dataIndex: 'senderAddress',
+      key: 'senderAddress',
     },
     {
       title: '充值金额',
-      dataIndex: 'rechargeNum',
-      key: 'rechargeNum',
+      dataIndex: 'amount',
+      key: 'amount',
       width: 100,
       fixed: 'right',
+      render: (amount: number, record: any) => {
+        const { coinDecimals } = record;
+        return Number(amount) / Math.pow(10, Number(coinDecimals || 6));
+      },
     },
   ];
   useEffect(() => {
