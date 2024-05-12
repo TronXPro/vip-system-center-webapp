@@ -33,10 +33,9 @@ instance.interceptors.response.use(
     const { status, data, message: messageContent } = resData;
     return resData as any;
   },
-  (error) => {
-    const content = error?.response?.data?.msg || error?.message || '请求错误';
-    message.error(content);
-    return error;
+  (res) => {
+    const resData = res.data || {};
+    return resData;
   }
 );
 
