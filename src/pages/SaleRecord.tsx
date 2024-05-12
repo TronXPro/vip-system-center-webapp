@@ -107,6 +107,7 @@ export default function SaleRecord() {
           '003': '购买服务商',
           '004': '充值U',
           '005': '分红',
+          '006': '购买会员',
         };
         return <div color='success'>{actionTypeList[text]}</div>;
       },
