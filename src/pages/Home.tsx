@@ -147,14 +147,13 @@ export default function Home() {
     updateSubscriptions({
       email: userInfo.email,
       roleType: 1,
-      activeType: Number(purchaseAccountType),
     }).then((res: any) => {
       const { success } = res;
       if (success) {
-        message.success('兑换成功');
+        message.success('兑换会员成功');
         updateUserDetail();
       } else {
-        message.error('兑换失败，请联系客服！');
+        message.error('兑换会员失败，请联系客服！');
       }
     });
     setisPurchaseMenberModalOpen(false);
