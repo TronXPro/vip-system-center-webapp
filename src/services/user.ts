@@ -69,3 +69,17 @@ export async function updateSubscriptions(params: any) {
   const data = await axios.post(url, { ...params });
   return data;
 }
+
+// 获取用户的推荐关系
+export async function getSubAccounts(params: any) {
+  const { email, pageIdx = 1, pageCount = 999 } = params;
+  const url = '/api/dashboard/user/getSubAccounts';
+  const data = await axios.get(url, {
+    params: {
+      email: email,
+      pageIdx: pageIdx,
+      pageCount: pageCount,
+    },
+  });
+  return data;
+}

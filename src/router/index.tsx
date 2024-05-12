@@ -7,6 +7,7 @@ import Recharge from '../pages/Recharge';
 import Login from '../pages/Login';
 import RechargeRecord from '../pages/RechargeRecord';
 import WithdrawalRecord from '../pages/WithdrawalRecord';
+import RecommendationRecord from '../pages/RecommendationRecord';
 
 const routerList = [
   {
@@ -28,6 +29,10 @@ const routerList = [
       {
         path: 'withdrawal-record',
         element: <WithdrawalRecord />,
+      },
+      {
+        path: 'recommendation-record',
+        element: <RecommendationRecord />,
       },
       {
         path: 'help',

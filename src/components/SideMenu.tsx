@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  ApiOutlined,
+  UserSwitchOutlined,
   HomeOutlined,
   UnorderedListOutlined,
   FileWordOutlined,
@@ -42,6 +42,11 @@ export default function SideMenu() {
       label: '提现记录',
       key: '/withdrawal-record',
       icon: <MoneyCollectOutlined />,
+    },
+    {
+      label: '推荐记录',
+      key: '/recommendation-record',
+      icon: <UserSwitchOutlined />,
     },
     {
       label: '常见问题',
