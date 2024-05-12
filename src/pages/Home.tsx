@@ -101,7 +101,8 @@ export default function Home() {
         email: userInfo.email,
         walletAddress: walletAddress,
       }).then((data: any) => {
-        if (data) {
+        const { success } = data;
+        if (success) {
           messageApi.success('绑定成功');
           setisBindWalletAddressModalOpen(false);
           updateUserDetail();
