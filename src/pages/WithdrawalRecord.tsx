@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import styles from './WithdrawalRecord.module.less';
 import { Table } from 'antd';
 import NavTitle from '../components/NavTitle';
-import { getUserEmail, getUserWalletAddress } from '../utils/user-info';
-import { getRechargeRecord } from '../services/sale';
+import {
+  getUserEmail,
+  getUserId,
+  getUserWalletAddress,
+} from '../utils/user-info';
+import { getPointRecord, getRechargeRecord } from '../services/sale';
 import moment from 'moment';
 
 export default function WithdrawalRecord() {
@@ -23,11 +27,26 @@ export default function WithdrawalRecord() {
       pagination: pagination,
     });
   };
+  // 0 未完成 1 已完成 2部分完成 3撤销 4 退款 5 进行中 -1 预制单 -2 暂停
+  const statusList = [
+    {
+      value: 'success',
+      key: '兑换成功',
+    },
+    {
+      value: 'fail',
+      key: '兑换失败',
+    },
+    {
+      value: 'pending',
+      key: '审核',
+    },
+  ];
   const tableColumns: any = [
     {
       title: '时间',
-      dataIndex: 'createDate',
-      key: 'createDate',
+      dataIndex: 'applyTime',
+      key: 'applyTime',
       render: (text: any) => {
         text = Number(text);
         return moment(text).format('YYYY-MM-DD HH:mm:ss');
@@ -35,33 +54,46 @@ export default function WithdrawalRecord() {
     },
     {
       title: '提现哈希',
-      dataIndex: 'txID',
-      key: 'txID',
+      dataIndex: 'withdrawHash',
+      key: 'withdrawHash',
     },
     {
       title: '提现地址',
-      dataIndex: 'senderAddress',
-      key: 'senderAddress',
+      dataIndex: 'withdrawAddress',
+      key: 'withdrawAddress',
     },
     {
       title: '提现金额(USDT)',
-      dataIndex: 'amount',
-      key: 'amount',
-      width: 100,
-      fixed: 'right',
+      dataIndex: 'withdrawNum',
+      key: 'withdrawNum',
+      width: 200,
       render: (amount: number, record: any) => {
         const { coinDecimals } = record;
         return Number(amount) / Math.pow(10, Number(coinDecimals || 6));
       },
     },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+      width: 100,
+      fixed: 'right',
+      render: (text: any) => {
+        let signItem = statusList.find((item) => item.value === text);
+        return <div color='success'>{signItem?.key}</div>;
+      },
+    },
   ];
   useEffect(() => {
     const email = getUserEmail();
+    const uuid = getUserId();
     const walletAddress = getUserWalletAddress();
     setLoading(true);
-    getRechargeRecord({
+    getPointRecord({
+      uuid,
       email,
       walletAddress,
+      actionType: '001',
       pageIdx: tableParams.pagination.current,
       pageCount: tableParams.pagination.pageSize,
     }).then((res: any) => {
