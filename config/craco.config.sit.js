@@ -6,12 +6,17 @@ module.exports = {
     port: 8000,
     proxy: {
       '/api': {
-        target: 'https://test-trade.checkcat450.me/tradebot',
+        target: 'http://localhost:8081',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '',
         },
       },
+    },
+  },
+  webpack: {
+    configure: (webpackConfig) => {
+      return webpackConfig;
     },
   },
   plugins: [{ plugin: CracoLessPlugin }],

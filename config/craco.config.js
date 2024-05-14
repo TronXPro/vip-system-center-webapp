@@ -4,12 +4,6 @@ const webpack = require('webpack');
 module.exports = {
   devServer: {
     port: 8000,
-    // proxy: {
-    //   '/api': {
-    //     target: 'https://api.gas52.com/',
-    //     changeOrigin: true,
-    //   }
-    // }
     proxy: {
       '/api': 'http://localhost:2626/',
     },

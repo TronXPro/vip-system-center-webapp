@@ -33,6 +33,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "start:sit": "craco start --config config/craco.config.sit.js",
     "start:dev": "craco start --config config/craco.config.dev.js",
     "build:dev": "craco build --config config/craco.config.dev.js",
     "start": "craco start --config config/craco.config.js",
