@@ -135,6 +135,7 @@ export default function SaleRecord() {
       <NavTitle title='积分记录' />
       <div className={styles.container}>
         <Table
+          rowKey={'_id'}
           loading={loading}
           columns={tableColumns}
           dataSource={tableData}

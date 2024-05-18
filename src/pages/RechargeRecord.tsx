@@ -80,6 +80,7 @@ export default function RechargeRecord() {
       <div className={styles.containerWrap}>
         <div className={styles.container}>
           <Table
+            rowKey={'_id'}
             loading={loading}
             columns={tableColumns}
             dataSource={tableData}
