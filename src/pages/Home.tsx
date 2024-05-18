@@ -12,6 +12,7 @@ import {
   List,
   Radio,
   Space,
+  Tag,
 } from 'antd';
 import { useDispatch } from 'react-redux';
 import QRCode from 'qrcode';
@@ -31,10 +32,22 @@ import NavTitle from '../components/NavTitle';
 
 export default function Home() {
   const roleTypeList: any = {
-    [-999]: '普通用户',
-    1: '会员',
-    2: '节点用户',
-    3: '服务商',
+    [-999]: {
+      color: 'default',
+      text: '普通用户',
+    },
+    1: {
+      color: '#108ee9',
+      text: '会员',
+    },
+    2: {
+      color: '#87d068',
+      text: '节点用户',
+    },
+    3: {
+      color: '#f50',
+      text: '服务商',
+    },
   };
   const qrCodeRef = useRef(null);
   const dispatch = useDispatch();
@@ -322,11 +335,23 @@ export default function Home() {
                       ),
                     ]}
                   >
-                    <List.Item.Meta
-                      title='账户类型:'
-                      description='账户类型可以通过积分来购买'
-                    ></List.Item.Meta>
-                    {roleTypeList[userLevelInfo.roleType]}
+                    <div
+                      style={{
+                        width: '100%',
+                      }}
+                    >
+                      <List.Item.Meta
+                        title='账户类型:'
+                        description='账户类型可以通过积分来购买'
+                      ></List.Item.Meta>
+                      <Tag
+                        color={
+                          roleTypeList[userLevelInfo.roleType]?.color || ''
+                        }
+                      >
+                        {roleTypeList[userLevelInfo.roleType]?.text}
+                      </Tag>
+                    </div>
                   </List.Item>
                   <List.Item
                     style={{ overflow: 'auto' }}
