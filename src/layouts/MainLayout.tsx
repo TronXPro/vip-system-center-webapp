@@ -59,8 +59,7 @@ const MainLayout: FC = (props) => {
     <Layout>
       <Header className={styles.header}>
         <div className={styles.logoWrap}>
-          {/* <img src="./logo.png" alt="" /> */}
-          <span className={styles.titleName}>无忧智能系统</span>
+          <span className={styles.titleName}>TradeWise 智能系统 VIP 平台</span>
         </div>
         {!isMobile ? (
           <Dropdown

@@ -54,7 +54,7 @@ export default function Login() {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.logoWrap}>
-          <span className={styles.titleName}>无忧智能VIP平台</span>
+          <span className={styles.titleName}>TradeWise 智能系统 VIP 平台</span>
         </div>
       </div>
       <div className={styles.loginFromWrap}>
