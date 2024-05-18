@@ -35,6 +35,17 @@ instance.interceptors.response.use(
   },
   (res) => {
     const resData = res.data || {};
+    const status = res?.response?.status;
+    if (status && Number(status) >= 400 && Number(status) < 500) {
+      message.error({
+        type: 'error',
+        content: res?.response?.data?.msg || res?.message || '请求错误',
+        style: {
+          marginTop: '20vh',
+        },
+        duration: 2,
+      });
+    }
     return resData;
   }
 );
