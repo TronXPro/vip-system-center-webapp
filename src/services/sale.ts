@@ -11,13 +11,15 @@ export async function getPointRecord(params: any) {
     pageIdx = 1,
     pageCount = 10,
   } = params;
-  const data = await axios.post(url, {
-    uuid,
-    status,
-    actionType,
-    email,
-    pageIdx,
-    pageCount,
+  const data = await axios.get(url, {
+    params: {
+      uuid,
+      status,
+      actionType,
+      email,
+      pageIdx,
+      pageCount,
+    },
   });
   return data;
 }
