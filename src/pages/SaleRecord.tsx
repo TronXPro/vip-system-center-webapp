@@ -3,7 +3,6 @@ import styles from './SaleRecord.module.less';
 import { Table, Button, Modal, List, message } from 'antd';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { getPointRecord } from '../services/sale';
-import { useSelector } from 'react-redux';
 import moment from 'moment';
 import NavTitle from '../components/NavTitle';
 import { getUserId, getUserEmail } from '../utils/user-info';
@@ -94,6 +93,12 @@ export default function SaleRecord() {
       dataIndex: 'amount',
       key: 'amount',
       width: 100,
+      render: (amount: string, record: any) => {
+        const text = ['002', '003', '006'].includes(record.actionType)
+          ? `-${amount}`
+          : `${amount}`;
+        return text;
+      },
     },
     {
       title: '记录类型',
