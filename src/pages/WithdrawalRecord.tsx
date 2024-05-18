@@ -70,10 +70,6 @@ export default function WithdrawalRecord() {
       dataIndex: 'withdrawNum',
       key: 'withdrawNum',
       width: 200,
-      render: (amount: number, record: any) => {
-        const { coinDecimals } = record;
-        return Number(amount) / Math.pow(10, Number(coinDecimals || 6));
-      },
     },
     {
       title: '状态',
