@@ -294,12 +294,14 @@ export default function Home() {
                   <List.Item
                     style={{ overflow: 'auto' }}
                     actions={[
-                      <Button
-                        disabled={userInfo.credits === 0}
-                        onClick={handleWithDrawClick}
-                      >
-                        提现
-                      </Button>,
+                      userInfo.canWithdraw ? (
+                        <Button
+                          disabled={userInfo.credits === 0}
+                          onClick={handleWithDrawClick}
+                        >
+                          提现
+                        </Button>
+                      ) : null,
                     ]}
                   >
                     <List.Item.Meta title='账户积分:' />
