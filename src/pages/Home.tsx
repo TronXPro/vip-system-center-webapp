@@ -13,6 +13,7 @@ import {
   Radio,
   Space,
   Tag,
+  InputNumber,
 } from 'antd';
 import { useDispatch } from 'react-redux';
 import QRCode from 'qrcode';
@@ -53,6 +54,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const [walletBindStatus, setWalletBindStatus] = useState(false);
   const [userInfo, setUserInfo] = useState<any>({});
+  const [userCredits, setUserCredits] = useState(0);
   const [walletAddress, setWalletAddress] = useState<any>(undefined);
   const [isBindWalletAddressModalOpen, setisBindWalletAddressModalOpen] =
     useState(false);
@@ -76,7 +78,9 @@ export default function Home() {
   };
   // 点击兑换按钮
   const handleWithDrawClick = () => {
-    setisExChangePointsModalOpen(true);
+    updateUserDetail().then(() => {
+      setisExChangePointsModalOpen(true);
+    });
   };
   // 处理修改密码
   const handleChangePasswordClick = () => {
@@ -139,7 +143,7 @@ export default function Home() {
       uuid: getUserId(),
       actionType: '001',
       desc: '用户提现',
-      amount: userInfo.credits,
+      amount: userCredits,
     }).then((res: any) => {
       console.log('data', res);
       const { data, success } = res;
@@ -217,12 +221,13 @@ export default function Home() {
     setisPurchaseServerModalOpen(false);
   };
   const updateUserDetail = () => {
-    getUserDetail(userName).then((res: any) => {
+    return getUserDetail(userName).then((res: any) => {
       // dispatch(loginReducer({ ...data }));
       const { success, data } = res;
       console.log('data', data);
       if (success) {
         setUserInfo(data);
+        setUserCredits(data.credits);
       } else {
         message.error('获取用户信息失败');
       }
@@ -290,7 +295,7 @@ export default function Home() {
                     style={{ overflow: 'auto' }}
                     actions={[
                       <Button
-                        disabled={userInfo.credits == 0}
+                        disabled={userInfo.credits === 0}
                         onClick={handleWithDrawClick}
                       >
                         提现
@@ -519,7 +524,19 @@ export default function Home() {
         okText='确认'
         cancelText='取消'
       >
-        <p>兑换积分: {userInfo.credits}积分</p>
+        <div>
+          兑换积分:
+          <InputNumber
+            value={Number(userCredits)}
+            min={0}
+            max={Number(userCredits)}
+            step='0.001'
+            onChange={(value) => {
+              setUserCredits(value as number);
+            }}
+          />
+          积分
+        </div>
         <p>积分兑换的钱将稍后转入到钱包。</p>
         <p>有任何问题请联系客服！</p>
       </Modal>
