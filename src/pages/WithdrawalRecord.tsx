@@ -7,7 +7,7 @@ import {
   getUserId,
   getUserWalletAddress,
 } from '../utils/user-info';
-import { getPointRecord, getRechargeRecord } from '../services/sale';
+import { getPointRecord } from '../services/sale';
 import moment from 'moment';
 
 export default function WithdrawalRecord() {
@@ -101,6 +101,12 @@ export default function WithdrawalRecord() {
       const { success, data } = res;
       if (success) {
         setTableData(data.list);
+        setTableParams({
+          pagination: {
+            ...tableParams.pagination,
+            total: data.totalCount,
+          },
+        });
       }
     });
   }, [JSON.stringify(tableParams)]);
