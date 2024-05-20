@@ -2,12 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './RecommendationRecord.module.less';
 import { Table } from 'antd';
 import NavTitle from '../components/NavTitle';
-import {
-  getUserEmail,
-  getUserId,
-  getUserWalletAddress,
-} from '../utils/user-info';
-import { getPointRecord, getRechargeRecord } from '../services/sale';
+import { getUserEmail } from '../utils/user-info';
 import moment from 'moment';
 import { getSubAccounts } from '../services/user';
 
@@ -73,6 +68,12 @@ export default function RecommendationRecord() {
       const { success, data } = res;
       if (success) {
         setTableData(data.list);
+        setTableParams({
+          pagination: {
+            ...tableParams.pagination,
+            total: data.totalCount,
+          },
+        });
       }
     });
   }, [JSON.stringify(tableParams)]);
