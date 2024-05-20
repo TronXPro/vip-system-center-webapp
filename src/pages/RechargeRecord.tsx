@@ -70,6 +70,12 @@ export default function RechargeRecord() {
       const { success, data } = res;
       if (success) {
         setTableData(data.list);
+        setTableParams({
+          pagination: {
+            ...tableParams.pagination,
+            total: data.totalCount,
+          },
+        });
       }
     });
   }, [JSON.stringify(tableParams)]);
