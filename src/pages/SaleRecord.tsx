@@ -63,6 +63,12 @@ export default function SaleRecord() {
       if (success) {
         console.log('data', data);
         setTableData(data.list);
+        setTableParams({
+          pagination: {
+            ...tableParams.pagination,
+            total: data.totalCount,
+          },
+        });
       } else {
         setTableData([]);
       }
@@ -70,7 +76,7 @@ export default function SaleRecord() {
   };
   useEffect(() => {
     updatePointRecord();
-  }, []);
+  }, [JSON.stringify(tableParams)]);
   const tableColumns: any = [
     {
       title: '订单号',
