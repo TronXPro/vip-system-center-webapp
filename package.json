@@ -37,6 +37,7 @@
     "start:dev": "craco start --config config/craco.config.dev.js",
     "build:dev": "craco build --config config/craco.config.dev.js",
     "start": "craco start --config config/craco.config.js",
+    "build:local": "craco build --config config/craco.config.js",
     "build": "craco build --config config/craco.config.js && sudo rm -rf /var/www/trade-vip && sudo mv build /var/www/trade-vip",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
