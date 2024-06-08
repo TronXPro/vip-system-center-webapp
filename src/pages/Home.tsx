@@ -307,6 +307,7 @@ export default function Home() {
                     <List.Item.Meta title='账户积分:' />
                     {userInfo.credits + ' 积分'}
                   </List.Item>
+
                   <List.Item
                     style={{ overflow: 'auto' }}
                     actions={[
@@ -359,6 +360,37 @@ export default function Home() {
                         {roleTypeList[userLevelInfo.roleType]?.text}
                       </Tag>
                     </div>
+                  </List.Item>
+                  <List.Item style={{ overflow: 'auto' }}>
+                    <List.Item.Meta title='个人邀请码:'></List.Item.Meta>
+                    <CopyToClipboard
+                      text={userInfo.inviteCode}
+                      onCopy={() => {
+                        messageApi.open({
+                          type: 'success',
+                          content: '复制成功',
+                        });
+                      }}
+                    >
+                      <Button type='dashed' style={{ marginRight: '8px' }}>
+                        点击复制邀请码
+                      </Button>
+                    </CopyToClipboard>
+                    <CopyToClipboard
+                      text={`${window.location.href
+                        .replace('-vip', '')
+                        .replace('home', '')}register?inviteCode=${
+                        userInfo.inviteCode
+                      }`}
+                      onCopy={() => {
+                        messageApi.open({
+                          type: 'success',
+                          content: '复制成功',
+                        });
+                      }}
+                    >
+                      <Button type='dashed'>点击复制邀请链接</Button>
+                    </CopyToClipboard>
                   </List.Item>
                   <List.Item
                     style={{ overflow: 'auto' }}
