@@ -371,20 +371,10 @@ export default function Home() {
                     </div>
                   </List.Item>
                   <List.Item style={{ overflow: 'auto' }}>
-                    <List.Item.Meta title='个人邀请码:'></List.Item.Meta>
-                    <CopyToClipboard
-                      text={inviteCode}
-                      onCopy={() => {
-                        messageApi.open({
-                          type: 'success',
-                          content: '复制成功',
-                        });
-                      }}
-                    >
-                      <Button type='dashed' style={{ marginRight: '8px' }}>
-                        点击复制邀请码
-                      </Button>
-                    </CopyToClipboard>
+                    <List.Item.Meta
+                      title='个人邀请码:'
+                      style={{ minWidth: '6em' }}
+                    ></List.Item.Meta>
                     <CopyToClipboard
                       text={link}
                       onCopy={() => {
@@ -394,7 +384,20 @@ export default function Home() {
                         });
                       }}
                     >
-                      <Button type='dashed'>点击复制邀请链接</Button>
+                      <Button type='dashed' style={{ marginRight: '8px' }}>
+                        点击复制邀请链接
+                      </Button>
+                    </CopyToClipboard>
+                    <CopyToClipboard
+                      text={inviteCode}
+                      onCopy={() => {
+                        messageApi.open({
+                          type: 'success',
+                          content: '复制成功',
+                        });
+                      }}
+                    >
+                      <Button type='dashed'>点击复制邀请码</Button>
                     </CopyToClipboard>
                   </List.Item>
                   <List.Item
