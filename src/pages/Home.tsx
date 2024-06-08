@@ -54,6 +54,9 @@ export default function Home() {
   const dispatch = useDispatch();
   const [walletBindStatus, setWalletBindStatus] = useState(false);
   const [userInfo, setUserInfo] = useState<any>({});
+  const [link, setLink] = useState('');
+  const [inviteCode, setInviteCode] = useState('');
+
   const [userCredits, setUserCredits] = useState(0);
   const [walletAddress, setWalletAddress] = useState<any>(undefined);
   const [isBindWalletAddressModalOpen, setisBindWalletAddressModalOpen] =
@@ -228,6 +231,12 @@ export default function Home() {
       if (success) {
         setUserInfo(data);
         setUserCredits(data.credits);
+        setInviteCode(data.inviteCode);
+        setLink(
+          `${window.location.href
+            .replace('-vip', '')
+            .replace('home', '')}register?inviteCode=${data.inviteCode}`
+        );
       } else {
         message.error('获取用户信息失败');
       }
@@ -364,7 +373,7 @@ export default function Home() {
                   <List.Item style={{ overflow: 'auto' }}>
                     <List.Item.Meta title='个人邀请码:'></List.Item.Meta>
                     <CopyToClipboard
-                      text={userInfo.inviteCode}
+                      text={inviteCode}
                       onCopy={() => {
                         messageApi.open({
                           type: 'success',
@@ -377,11 +386,7 @@ export default function Home() {
                       </Button>
                     </CopyToClipboard>
                     <CopyToClipboard
-                      text={`${window.location.href
-                        .replace('-vip', '')
-                        .replace('home', '')}register?inviteCode=${
-                        userInfo.inviteCode
-                      }`}
+                      text={link}
                       onCopy={() => {
                         messageApi.open({
                           type: 'success',
